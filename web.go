@@ -55,8 +55,10 @@ const pageHTML = `<!doctype html>
   const text = document.getElementById('text');
   const url = document.getElementById('url');
   const link = document.getElementById('link');
+  let starting = false;
 
   async function tick() {
+    if (starting) return;
     try {
       const response = await fetch('/health', { cache: 'no-store' });
       const health = await response.json();
@@ -77,6 +79,32 @@ const pageHTML = `<!doctype html>
     }
   }
 
+  async function startFromHash() {
+    const raw = location.hash.slice(1);
+    if (!raw) return;
+    history.replaceState(null, '', location.pathname);
+    starting = true;
+    box.className = 'status';
+    text.textContent = 'Starting Tasmota…';
+    try {
+      const request = JSON.parse(decodeURIComponent(raw));
+      const response = await fetch('/session', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(request),
+      });
+      const session = await response.json();
+      if (!response.ok || !session.url) throw new Error(session.error || 'Could not start Tasmota');
+      text.textContent = 'Tasmota is up — opening the web UI…';
+      location.href = session.url;
+    } catch (error) {
+      starting = false;
+      box.className = 'status bad';
+      text.textContent = error && error.message ? error.message : 'Could not start Tasmota';
+    }
+  }
+
+  startFromHash();
   tick();
   setInterval(tick, 2000);
 </script>
