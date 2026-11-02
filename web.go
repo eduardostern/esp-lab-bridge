@@ -57,9 +57,10 @@ const pageHTML = `<!doctype html>
   const url = document.getElementById('url');
   const link = document.getElementById('link');
   let starting = false;
+  let failed = false;
 
   async function tick() {
-    if (starting) return;
+    if (starting || failed) return;
     try {
       const response = await fetch('/health', { cache: 'no-store' });
       const health = await response.json();
@@ -100,6 +101,7 @@ const pageHTML = `<!doctype html>
       location.href = session.url;
     } catch (error) {
       starting = false;
+      failed = true;
       box.className = 'status bad';
       text.textContent = error && error.message ? error.message : 'Could not start Tasmota';
     }
