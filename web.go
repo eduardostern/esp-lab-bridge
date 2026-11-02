@@ -46,6 +46,7 @@ const pageHTML = `<!doctype html>
 <main>
   <h1>ESP Lab Bridge</h1>
   <p>Keep this running while you use Tasmota on the hosted ESP Lab.</p>
+  <p>This page only reports status. To start Tasmota, open a Tasmota project in the hosted ESP Lab and click <strong>Open Tasmota web UI</strong>.</p>
   <div id="status" class="status"><span class="dot"></span><span id="text">checking…</span></div>
   <div id="url" class="url"><a id="link" href="#">Open Tasmota web UI ↗</a></div>
   <small>Loopback only: 127.0.0.1:8788 · sessions stop after 10 minutes or when replaced.</small>
