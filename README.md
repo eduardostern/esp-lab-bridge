@@ -87,6 +87,17 @@ It answers Chrome's Private Network Access preflight with
 `Access-Control-Allow-Private-Network: true`. It rejects non-loopback `Host` headers and
 binds only to loopback.
 
+### Chrome 142+ Local Network Access
+
+Chrome now requires the **Local Network Access** permission before a public site can
+fetch `127.0.0.1`. Allow `https://esp-lab.stern.workers.dev` in
+`chrome://settings/content/localNetworkAccess`, or use the site controls next to the
+address bar.
+
+If the permission is denied, the hosted app falls back to opening this local page with
+the session in the URL fragment. The page starts Tasmota and navigates to the web UI, so
+the normal `fetch` permission is not needed for that path.
+
 ## Firmware cache
 
 Firmware is cached under `os.UserCacheDir()/esp-lab-bridge/firmware` and verified with
