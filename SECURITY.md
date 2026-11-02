@@ -19,6 +19,10 @@ rather than in a public issue.
 - rejects non-loopback `Host` headers
 - stops the emulator when asked, when replaced, or after 10 minutes
 
+The `esp32sim` engine is a separate MIT-licensed component. This bridge does not include or
+download it; point `ESP32SIM_BIN` at an engine you built or obtained from ESP Lab, and verify its
+checksum separately if you need to.
+
 ## What this program does not do
 
 - no telemetry
