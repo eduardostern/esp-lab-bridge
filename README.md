@@ -98,6 +98,11 @@ If the permission is denied, the hosted app falls back to opening this local pag
 the session in the URL fragment. The page starts Tasmota and navigates to the web UI, so
 the normal `fetch` permission is not needed for that path.
 
+Safari blocks cross-origin `http://127.0.0.1` fetches from HTTPS pages entirely (WebKit
+mixed-content policy). The same local-page fallback works there because it is a top-level
+navigation. If Safari upgrades the address to HTTPS, turn off **Settings → Privacy →
+HTTPS-Only** for this session, or use Chrome, Edge or Firefox.
+
 ## Firmware cache
 
 Firmware is cached under `os.UserCacheDir()/esp-lab-bridge/firmware` and verified with
