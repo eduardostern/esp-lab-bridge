@@ -237,7 +237,9 @@ func withCORS(next http.Handler, origins []string) http.Handler {
 			return
 		}
 		origin := strings.TrimRight(r.Header.Get("Origin"), "/")
-		if origin != "" && !allowed[origin] {
+		// The local status page posts to /session from the same loopback origin.
+		// That origin is not in the hosted allowlist, so accept it explicitly.
+		if origin != "" && !allowed[origin] && !sameOrigin(r, origin) {
 			http.Error(w, "origin not allowed", http.StatusForbidden)
 			return
 		}
@@ -257,6 +259,10 @@ func withCORS(next http.Handler, origins []string) http.Handler {
 		}
 		next.ServeHTTP(w, r)
 	})
+}
+
+func sameOrigin(r *http.Request, origin string) bool {
+	return origin == "http://"+r.Host || origin == "https://"+r.Host
 }
 
 func loopbackHost(hostport string) bool {
