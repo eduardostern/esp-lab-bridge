@@ -3,12 +3,12 @@
 # copied next to the bridge (or pointed at with ESP32SIM_BIN).
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUT="$ROOT/dist/bridge"
 VERSION="${VERSION:-0.1.0}"
 
 mkdir -p "$OUT"
-cd "$ROOT/bridge"
+cd "$ROOT"
 
 for target in darwin/arm64 darwin/amd64 linux/amd64 linux/arm64 windows/amd64; do
   goos="${target%/*}"
