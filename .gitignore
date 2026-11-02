@@ -1,5 +1,7 @@
 /esp-lab-bridge
 /esp-lab-bridge.exe
+/esp32sim
+/esp32sim.exe
 /dist/
 *.log
 .DS_Store
